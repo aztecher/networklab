@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "Removing creating simpleFRR + BGP Labo"
 # remove container
 sudo docker stop frr1
 sudo docker stop frr2
