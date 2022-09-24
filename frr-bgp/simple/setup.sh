@@ -29,11 +29,13 @@ echo "Creating frr containers ..."
 sudo docker run -dit \
     -v=`pwd`/config/daemons:/etc/frr/daemons \
     -v=`pwd`/config/frr1/frr.conf:/etc/frr/frr.conf \
+    -v=`pwd`/config/frr1/vtysh.conf:/etc/frr/vtysh.conf \
     --name frr1 --hostname frr1 --privileged --net ${DOCKER_NETWORK_NAME_1} frrouting/frr:v7.5.0
 sudo docker network connect ${DOCKER_NETWORK_NAME_2} frr1
 sudo docker run -dit \
     -v=`pwd`/config/daemons:/etc/frr/daemons \
     -v=`pwd`/config/frr2/frr.conf:/etc/frr/frr.conf \
+    -v=`pwd`/config/frr2/vtysh.conf:/etc/frr/vtysh.conf \
     --name frr2 --hostname frr2 --privileged --net ${DOCKER_NETWORK_NAME_2} frrouting/frr:v7.5.0
 sudo docker network connect ${DOCKER_NETWORK_NAME_3} frr2
 
