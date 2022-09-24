@@ -1,5 +1,17 @@
 # Simple 3-Layer FRR + BGP Labo
 
+```
+        +-------------[Spine(10.0.0.2)]-------------+
+        |                                           |
+  [Leaf1(10.0.1.2)]                           [Leaf2(10.0.2.2)]
+        |                                           |
+        |                                           |
+[Server1(10.0.3.2)]                         [Server2(10.0.4.2)]
+        |                                           |
+        |                                           |
+[Alpine1(10.0.10.2)]                        [Alpine2(10.0.11.2)]
+```
+
 ## Requirement
 
 - docker

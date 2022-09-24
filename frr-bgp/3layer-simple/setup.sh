@@ -48,12 +48,14 @@ echo "Creating frr containers ..."
 sudo docker run -dit \
     -v=`pwd`/config/daemons:/etc/frr/daemons \
     -v=`pwd`/config/spine/frr.conf:/etc/frr/frr.conf \
+    -v=`pwd`/config/spine/vtysh.conf:/etc/frr/vtysh.conf \
     --name spine --hostname spine --privileged --net ${DOCKER_NETWORK_NAME_SPINE} frrouting/frr:v7.5.0
 
 # Leaf SW1
 sudo docker run -dit \
     -v=`pwd`/config/daemons:/etc/frr/daemons \
     -v=`pwd`/config/leaf1/frr.conf:/etc/frr/frr.conf \
+    -v=`pwd`/config/leaf1/vtysh.conf:/etc/frr/vtysh.conf \
     --name leaf1 --hostname leaf1 --privileged --net ${DOCKER_NETWORK_NAME_LEAF_1} frrouting/frr:v7.5.0
 sudo docker network connect ${DOCKER_NETWORK_NAME_SPINE} leaf1
 
@@ -61,6 +63,7 @@ sudo docker network connect ${DOCKER_NETWORK_NAME_SPINE} leaf1
 sudo docker run -dit \
     -v=`pwd`/config/daemons:/etc/frr/daemons \
     -v=`pwd`/config/leaf2/frr.conf:/etc/frr/frr.conf \
+    -v=`pwd`/config/leaf2/vtysh.conf:/etc/frr/vtysh.conf \
     --name leaf2 --hostname leaf2 --privileged --net ${DOCKER_NETWORK_NAME_LEAF_2} frrouting/frr:v7.5.0
 sudo docker network connect ${DOCKER_NETWORK_NAME_SPINE} leaf2
 
@@ -68,6 +71,7 @@ sudo docker network connect ${DOCKER_NETWORK_NAME_SPINE} leaf2
 sudo docker run -dit \
     -v=`pwd`/config/daemons:/etc/frr/daemons \
     -v=`pwd`/config/server1/frr.conf:/etc/frr/frr.conf \
+    -v=`pwd`/config/server1/vtysh.conf:/etc/frr/vtysh.conf \
     --name server1 --hostname server1 --privileged --net ${DOCKER_NETWORK_NAME_SERVERSIDE_1} frrouting/frr:v7.5.0
 sudo docker network connect ${DOCKER_NETWORK_NAME_LEAF_1} server1
 sudo docker network connect ${DOCKER_NETWORK_NAME_CONTAINER_1} server1
@@ -76,15 +80,12 @@ sudo docker network connect ${DOCKER_NETWORK_NAME_CONTAINER_1} server1
 sudo docker run -dit \
     -v=`pwd`/config/daemons:/etc/frr/daemons \
     -v=`pwd`/config/server2/frr.conf:/etc/frr/frr.conf \
+    -v=`pwd`/config/server2/vtysh.conf:/etc/frr/vtysh.conf \
     --name server2 --hostname server2 --privileged --net ${DOCKER_NETWORK_NAME_SERVERSIDE_2} frrouting/frr:v7.5.0
 sudo docker network connect ${DOCKER_NETWORK_NAME_LEAF_2} server2
 sudo docker network connect ${DOCKER_NETWORK_NAME_CONTAINER_2} server2
 
 # overwrite netns gateway of each netns
-leaf1_gw_address=$(sudo docker inspect leaf1 | jq .[0].NetworkSettings.Networks.${DOCKER_NETWORK_NAME_SPINE}.IPAddress | tr -d '"')
-leaf2_gw_address=$(sudo docker inspect leaf2 | jq .[0].NetworkSettings.Networks.${DOCKER_NETWORK_NAME_SPINE}.IPAddress | tr -d '"')
-server1_gw_address=$(sudo docker inspect server1 | jq .[0].NetworkSettings.Networks.${DOCKER_NETWORK_NAME_LEAF_1}.IPAddress | tr -d '"')
-server2_gw_address=$(sudo docker inspect server2 | jq .[0].NetworkSettings.Networks.${DOCKER_NETWORK_NAME_LEAF_2}.IPAddress | tr -d '"')
 alpine1_gw_address=$(sudo docker inspect server1 | jq .[0].NetworkSettings.Networks.${DOCKER_NETWORK_NAME_CONTAINER_1}.IPAddress | tr -d '"')
 alpine2_gw_address=$(sudo docker inspect server2 | jq .[0].NetworkSettings.Networks.${DOCKER_NETWORK_NAME_CONTAINER_2}.IPAddress | tr -d '"')
 
