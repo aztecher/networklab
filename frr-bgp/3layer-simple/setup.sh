@@ -88,15 +88,7 @@ server2_gw_address=$(sudo docker inspect server2 | jq .[0].NetworkSettings.Netwo
 alpine1_gw_address=$(sudo docker inspect server1 | jq .[0].NetworkSettings.Networks.${DOCKER_NETWORK_NAME_CONTAINER_1}.IPAddress | tr -d '"')
 alpine2_gw_address=$(sudo docker inspect server2 | jq .[0].NetworkSettings.Networks.${DOCKER_NETWORK_NAME_CONTAINER_2}.IPAddress | tr -d '"')
 
-echo "Setting routing tables of frr containers ..."
-sudo docker exec -it leaf1 route add default gw ${leaf1_gw_address}
-sudo docker exec -it leaf1 route del default gw ${DOCKER_NETWORK_SUBNET_LEAF_1_DEFAULT_GW}
-sudo docker exec -it leaf2 route add default gw ${leaf2_gw_address}
-sudo docker exec -it leaf2 route del default gw ${DOCKER_NETWORK_SUBNET_LEAF_2_DEFAULT_GW}
-sudo docker exec -it server1 route add default gw ${server1_gw_address}
-sudo docker exec -it server1 route del default gw ${DOCKER_NETWORK_SUBNET_CONTAINER_1_DEFAULT_GW} # overwrited when network connect
-sudo docker exec -it server2 route add default gw ${server2_gw_address}
-sudo docker exec -it server2 route del default gw ${DOCKER_NETWORK_SUBNET_CONTAINER_2_DEFAULT_GW} # overwrited when network connect
+echo "Setting routing tables of alpine containers ..."
 sudo docker exec -it alpine1 route add default gw ${alpine1_gw_address}
 sudo docker exec -it alpine1 route del default gw ${DOCKER_NETWORK_SUBNET_CONTAINER_1_DEFAULT_GW}
 sudo docker exec -it alpine2 route add default gw ${alpine2_gw_address}
