@@ -11,5 +11,5 @@ This repository contains the scripts to build the network laboratories.
 | [frr-bgp/3layer-ecmp](./frr-bgp/3layer-ecmp/README.md) | The 3-Layer CLOS frr + ECMP + bgp labo |
 | [frr-bgp/3layer-simple-unnumbered](./frr-bgp/3layer-simple-unnumbered/README.md) | The simple frr + bgp unnumbered labo |
 | [frr-bgp/3layer-ecmp-unnumbered](./frr-bgp/3layer-ecmp-unnumbered/README.md) | The 3-Layer CLOS frr + ECMP + bgp unnumbered labo |
-| [ddlog/sandbox](./ddlog/sandbox/README.md) | The Dockerfile that includes DDLog tools |
-| [ddlog/sample](./ddlog/sandbox/README.md) | The DDLog tutorial program |
+| [ddlog/sandbox](./ddlog/sandbox/README.md) | The Dockerfile that includes DDlog tools |
+| [ddlog/sample](./ddlog/sample/README.md) | The DDlog tutorial program |

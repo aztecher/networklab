@@ -1,6 +1,6 @@
 # Differential-Datalog sandbox container
 
-This folder containes the files that are used at the build time of docker container.
+This folder containes the files that are used at the build time of docker container.  
 You can use docker container to execute/test programs located under the `ddlog/<FOLDER>`.
 
 ## Requirement
@@ -33,15 +33,15 @@ $ docker run --rm -v `pwd`:/workspace -it aztecher/ddlog:v0.0.1 /bin/bash
 
 ex2.
 # If you want to set the hard-limit for memory, then use `-m` option.
-# If you want to allow more cpus, then `--cpus` option.
+# If you want to set available cpus, then `--cpus` option.
 $ docker run --rm -v `pwd`:/workspace -m 8g --cpus 8 -it aztecher/ddlog:v0.0.1 /bin/bash
 ```
 
-This container includes the packages that are used in ddlog compilation/execution.
+This container includes the packages that are used in ddlog compilation/execution.  
 In order to set the PATH to make some binaries executable, please source `/etc/bash.bashrc` file.
 
 ```bash
-# read the /etc/bash.bashrc to set the required PATH
+# Read the /etc/bash.bashrc to set the required PATH
 root@1d2dd8ebde65:/workspace# source /etc/bash.bashrc
 
 # After that, you can execute some commands that are required to build/execute the ddlog program.
@@ -65,6 +65,6 @@ $ ./run_with_docker.sh aztecher/ddlog:v0.0.1
 ex2.
 # If you want to set memory hard-limit and available cpus, then please set bellow environmental variables
 $ export CONTAINER_MEM=8g # set the memory hard-limit to 8G
-$ export CONTAINER_CPUS=8 # set the available amount of CPUs is 8(core)
+$ export CONTAINER_CPUS=8 # set the available CPUs to 8(core)
 $ ./run_with_docker.sh aztecher/ddlog:v0.0.1
 ```
